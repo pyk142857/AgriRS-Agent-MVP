@@ -1,0 +1,10 @@
+streamlit==1.42.0
+langgraph==0.2.60
+langchain==0.3.0
+langchain-community==0.3.0
+folium==0.19.0
+streamlit-folium==0.19.0
+pandas==2.2.0
+numpy==2.2.0
+pillow==11.0.0
+matplotlib==3.10.0
