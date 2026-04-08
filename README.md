@@ -15,7 +15,7 @@
 
 ### 🚀 快速启动
 ```bash
-git clone https://github.com/你的用户名/AgriRS-Agent-MVP.git
+git clone https://github.com/pyk142857/AgriRS-Agent-MVP.git
 cd AgriRS-Agent-MVP
 pip install -r requirements.txt
 streamlit run app.py
