@@ -14,12 +14,19 @@ class AgriRSState(TypedDict):
     final_report: str
 
 def planner_node(state: AgriRSState):
-    state["task_plan"] = {"region": "河南省", "time_range": ("2020-01-01", "2025-12-31"), "analysis_prompt": "extreme_rain wheat"}
+    state["task_plan"] = {
+        "region": "河南省", 
+        "time_range": ("2020-01-01", "2025-12-31"), 
+        "analysis_prompt": "extreme_rain wheat"
+    }
     state["messages"].append(AIMessage(content="✅ 任务已规划"))
     return state
 
 def data_node(state: AgriRSState):
-    state["data"] = harvest_data.invoke({"region": state["task_plan"]["region"], "time_range": state["task_plan"]["time_range"]})
+    state["data"] = harvest_data.invoke({
+        "region": state["task_plan"]["region"], 
+        "time_range": state["task_plan"]["time_range"]
+    })
     state["messages"].append(AIMessage(content="📡 数据采集&对齐完成"))
     return state
 
@@ -29,7 +36,9 @@ def analysis_node(state: AgriRSState):
         "t2_path": state["data"]["t2_path"],
         "prompt": state["task_plan"]["analysis_prompt"]
     })
-    state["messages"].append(AIMessage(content=f"🔍 变化检测完成：{state['change_map']['semantic_description']}"))
+    state["messages"].append(AIMessage(
+        content=f"🔍 变化检测完成：{state['change_map']['semantic_description']}"
+    ))
     return state
 
 def causal_node(state: AgriRSState):
@@ -37,7 +46,6 @@ def causal_node(state: AgriRSState):
     return state
 
 def critic_node(state: AgriRSState):
-    # 简单反思逻辑
     state["critique"] = {"pass": "yes", "feedback": "所有物理量与语义一致"}
     state["messages"].append(AIMessage(content="✅ Critic 检查通过"))
     return state
@@ -55,7 +63,7 @@ def build_graph():
     workflow.add_edge("data", "analysis")
     workflow.add_edge("analysis", "causal")
     workflow.add_edge("causal", "critic")
-    workflow.add_edge("critic", END)   # MVP先不加循环，后续可加
+    workflow.add_edge("critic", END)
 
     memory = MemorySaver()
     return workflow.compile(checkpointer=memory)
