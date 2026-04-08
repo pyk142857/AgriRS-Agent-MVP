@@ -17,7 +17,7 @@
 
 #### 方法一：本地运行（推荐开发）
 ```bash
-git clone https://github.com/你的用户名/AgriRS-Agent-MVP.git
+git clone https://github.com/pyk142857/AgriRS-Agent-MVP.git
 cd AgriRS-Agent-MVP
 pip install -r requirements.txt
 streamlit run app.py
